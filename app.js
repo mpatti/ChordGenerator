@@ -42,23 +42,32 @@ flipToSimple.addEventListener('click', () => {
 
 generateBtn.addEventListener('click', generateProgression);
 
-// Check for API token
-let githubToken = localStorage.getItem('github_models_token');
-
-// Function to prompt for API token
+// Get API token from config, localStorage, or prompt user
 function getAPIToken() {
-    if (!githubToken) {
-        const token = prompt(
-            'Please enter your GitHub Models API token.\n\n' +
-            'You can get one from: https://github.com/marketplace/models\n\n' +
-            'The token will be stored locally in your browser.'
-        );
-        if (token) {
-            githubToken = token;
-            localStorage.setItem('github_models_token', token);
-        }
+    // First, check if token is provided in config.js (from GitHub Pages deployment)
+    if (window.APP_CONFIG && window.APP_CONFIG.GITHUB_TOKEN &&
+        window.APP_CONFIG.GITHUB_TOKEN !== 'YOUR_GITHUB_MODELS_TOKEN_HERE') {
+        return window.APP_CONFIG.GITHUB_TOKEN;
     }
-    return githubToken;
+
+    // Second, check localStorage for locally stored token
+    let storedToken = localStorage.getItem('github_models_token');
+    if (storedToken) {
+        return storedToken;
+    }
+
+    // Finally, prompt user for token and store it
+    const token = prompt(
+        'Please enter your GitHub Models API token.\n\n' +
+        'You can get one from: https://github.com/marketplace/models\n\n' +
+        'The token will be stored locally in your browser.'
+    );
+    if (token) {
+        localStorage.setItem('github_models_token', token);
+        return token;
+    }
+
+    return null;
 }
 
 // Generate chord progression using AI

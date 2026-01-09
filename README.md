@@ -15,25 +15,62 @@ An AI-powered chord progression generator designed for music creators seeking in
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### Option 1: GitHub Pages (Recommended - Auto-deployed)
 
-- A modern web browser
-- A GitHub Models API token (get one at [github.com/marketplace/models](https://github.com/marketplace/models))
+The app is automatically deployed to GitHub Pages when you push to the main branch!
 
-### Installation
+1. **Get your GitHub Models API token**:
+   - Visit [github.com/marketplace/models](https://github.com/marketplace/models)
+   - Sign up for access and create a token
 
-1. Clone this repository:
+2. **Add token to repository secrets**:
+   - Go to your repository Settings → Secrets and variables → Actions
+   - Click "New repository secret"
+   - Name: `GITHUB_MODELS_TOKEN`
+   - Value: Your GitHub Models token
+   - Click "Add secret"
+
+3. **Enable GitHub Pages**:
+   - Go to Settings → Pages
+   - Source: "GitHub Actions"
+   - Save
+
+4. **Push to main/master branch**:
+   ```bash
+   git push origin main
+   ```
+
+5. **Access your app**:
+   - Your app will be live at: `https://YOUR-USERNAME.github.io/ChordGenerator/`
+   - The API token is securely injected during deployment
+   - No configuration needed - it just works! ✨
+
+### Option 2: Local Development
+
+1. **Clone this repository**:
    ```bash
    git clone <repository-url>
    cd ChordGenerator
    ```
 
-2. Open `index.html` in your web browser, or serve it locally:
+2. **Set up your API token**:
    ```bash
-   npm start
+   cp config.template.js config.js
    ```
+   Edit `config.js` and replace `YOUR_GITHUB_MODELS_TOKEN_HERE` with your actual token
 
-3. On first use, you'll be prompted to enter your GitHub Models API token. This will be saved in your browser's local storage.
+3. **Open in browser**:
+   - Simply open `index.html` in your web browser
+   - Or use a local server:
+     ```bash
+     python -m http.server 8000
+     # Then visit: http://localhost:8000
+     ```
+
+### Prerequisites
+
+- A modern web browser (Chrome, Firefox, Safari, Edge)
+- A GitHub Models API token from [github.com/marketplace/models](https://github.com/marketplace/models)
 
 ## 🎮 How to Use
 
@@ -98,12 +135,18 @@ The app uses the GitHub Models API with GPT-4o to:
 
 ```
 ChordGenerator/
-├── index.html          # Main HTML structure
-├── styles.css          # All styling and animations
-├── app.js             # JavaScript logic and API integration
-├── package.json       # Project metadata
-├── .gitignore        # Git ignore rules
-└── README.md         # This file
+├── .github/
+│   └── workflows/
+│       └── deploy.yml      # GitHub Actions deployment workflow
+├── index.html              # Main HTML structure
+├── styles.css              # All styling and animations
+├── app.js                  # JavaScript logic and API integration
+├── config.template.js      # Template for local development config
+├── config.js              # Generated config (gitignored)
+├── package.json           # Project metadata
+├── .gitignore            # Git ignore rules
+├── README.md             # Project documentation
+└── SETUP.md              # Deployment setup guide
 ```
 
 ### API Integration
@@ -124,10 +167,25 @@ The app integrates with GitHub Models API:
 
 ## 🔐 Privacy & Security
 
-- API tokens are stored locally in browser localStorage
-- No server-side storage or tracking
+### Token Management
+
+**GitHub Pages Deployment (Secure)**:
+- API token is stored in GitHub repository secrets (never exposed in code)
+- Token is injected during build time via GitHub Actions
+- Users never need to enter or see the token
+- The token is NOT visible in the repository or client-side source code
+
+**Local Development**:
+- Copy `config.template.js` to `config.js` (gitignored)
+- Add your token to `config.js` - this file is never committed
+- Alternatively, token can be stored in browser localStorage
+
+### General Privacy
+
+- No server-side storage or user tracking
 - All processing happens client-side
-- API calls go directly to GitHub Models
+- API calls go directly to GitHub Models (no intermediary servers)
+- No cookies, no analytics, no data collection
 
 ## 🤝 Contributing
 
