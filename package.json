@@ -1,0 +1,12 @@
+{
+  "name": "chord-progression-generator",
+  "version": "1.0.0",
+  "description": "AI-powered chord progression generator for music creators",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": ["music", "chords", "generator", "ai"],
+  "author": "",
+  "license": "MIT"
+}

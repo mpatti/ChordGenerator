@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chord Progression Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Chord Progression Generator</h1>
+            <p class="subtitle">Find inspiration for your next musical creation</p>
+        </header>
+
+        <main>
+            <!-- Settings Card (Flip Animation) -->
+            <div class="settings-wrapper">
+                <div class="settings-card" id="settingsCard">
+                    <!-- Front Face (Simple Controls) -->
+                    <div class="card-face card-front">
+                        <div class="simple-controls">
+                            <div class="control-group">
+                                <label for="complexity">Complexity</label>
+                                <div class="complexity-slider">
+                                    <span class="slider-label">Simple</span>
+                                    <input type="range" id="complexity" min="1" max="5" value="3" step="1">
+                                    <span class="slider-label">Jazz</span>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="key">Key</label>
+                                <select id="key">
+                                    <option value="C">C</option>
+                                    <option value="C#">C# / Db</option>
+                                    <option value="D">D</option>
+                                    <option value="D#">D# / Eb</option>
+                                    <option value="E">E</option>
+                                    <option value="F">F</option>
+                                    <option value="F#">F# / Gb</option>
+                                    <option value="G">G</option>
+                                    <option value="G#">G# / Ab</option>
+                                    <option value="A">A</option>
+                                    <option value="A#">A# / Bb</option>
+                                    <option value="B">B</option>
+                                </select>
+                            </div>
+
+                            <button class="flip-button" id="flipToAdvanced">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M12 1v6m0 6v6m8.66-13l-5.2 3m-5.92 3.4l-5.2 3M3.34 6l5.2 3m5.92 3.4l5.2 3"></path>
+                                </svg>
+                                Advanced Settings
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Back Face (Advanced Controls) -->
+                    <div class="card-face card-back">
+                        <div class="advanced-controls">
+                            <h3>Advanced Settings</h3>
+
+                            <div class="control-group">
+                                <label for="mode">Mode</label>
+                                <select id="mode">
+                                    <option value="any">Any</option>
+                                    <option value="major">Major</option>
+                                    <option value="minor">Minor</option>
+                                    <option value="dorian">Dorian</option>
+                                    <option value="mixolydian">Mixolydian</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="tempo">Suggested Tempo</label>
+                                <select id="tempo">
+                                    <option value="any">Any</option>
+                                    <option value="slow">Slow (60-80 BPM)</option>
+                                    <option value="medium">Medium (80-120 BPM)</option>
+                                    <option value="fast">Fast (120-160 BPM)</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="style">Style</label>
+                                <select id="style">
+                                    <option value="any">Any</option>
+                                    <option value="pop">Pop</option>
+                                    <option value="jazz">Jazz</option>
+                                    <option value="classical">Classical</option>
+                                    <option value="blues">Blues</option>
+                                    <option value="rock">Rock</option>
+                                    <option value="rnb">R&B</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="allowDiminished">
+                                    <span>Include Diminished Chords</span>
+                                </label>
+                            </div>
+
+                            <div class="control-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="allowAugmented">
+                                    <span>Include Augmented Chords</span>
+                                </label>
+                            </div>
+
+                            <button class="flip-button" id="flipToSimple">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 12H5M12 19l-7-7 7-7"></path>
+                                </svg>
+                                Back to Simple
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Generate Button -->
+            <div class="generate-section">
+                <button class="generate-button" id="generateBtn">
+                    <svg class="generate-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                    <span>Generate Progression</span>
+                </button>
+            </div>
+
+            <!-- Chord Display -->
+            <div class="chord-display" id="chordDisplay">
+                <div class="loading-state" id="loadingState">
+                    <div class="spinner"></div>
+                    <p>Generating your chord progression...</p>
+                </div>
+                <div class="chord-grid" id="chordGrid">
+                    <!-- Chords will be dynamically inserted here -->
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by AI • Made with ♪ for music creators</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
